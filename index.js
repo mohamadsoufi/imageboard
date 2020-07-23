@@ -6,10 +6,10 @@ const s3 = require('./s3')
 const { s3Url } = require("./config.json")
 
 app.use(express.static('public'))
+app.use(express.json());
 const multer = require('multer');
 const uidSafe = require('uid-safe');
 const path = require('path');
-
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, __dirname + '/uploads');
@@ -43,7 +43,7 @@ app.get('/images', (req, res) => {
 
 app.post('/upload', uploader.single('file'), s3.upload, function (req, res) {
     // If nothing went wrong the file is already in the uploads directory
-    const { title, desc, username } = req.body
+    const { title, description, username } = req.body
     const { filename } = req.file
     const url = s3Url + filename
 
@@ -56,7 +56,7 @@ app.post('/upload', uploader.single('file'), s3.upload, function (req, res) {
     //         success: false
     //     });
     // }
-    db.addImage([title, desc, username, url]).then(({ rows }) => {
+    db.addImage([title, description, username, url]).then(({ rows }) => {
 
         res.json({ image: rows[0] })
     }).catch((err) => {
@@ -64,4 +64,17 @@ app.post('/upload', uploader.single('file'), s3.upload, function (req, res) {
     });
 })
 
+
+app.get('/image-card/:id', (req, res) => {
+    let id = req.params
+    let idNum = Number(id.id)
+    db.getImage([idNum]).then(({ rows }) => {
+        // console.log('results in get image :', results);
+
+        res.json({ image: rows[0] });
+    }).catch((err) => {
+        console.log('err in add image card:', err);
+    });
+
+})
 app.listen(port, () => console.log(`Example app listening on port port!`))
