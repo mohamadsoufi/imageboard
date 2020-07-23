@@ -6,16 +6,29 @@
 </head>
 <body>
 
-<h1 class="title">My Imageboard</h1>
-<h2 class="latest-images">latest images</h2>
+    
+    
+    <div id="main">
+        <h1 class="title">My Imageboard</h1>
+        <h2 class="latest-images">latest images</h2>
+    <div>
 
- <div id="main">
-     <div class="image-content" v-for='item in images'>
-           
-            <img v-bind:src="item.url" alt="img">
-         <p class="title">{{item.title}}</p>
+        <form>
+            <input v-model='title' type="text" name='title' placeholder='title'>
+            <input v-model='description' type="text" name='description' placeholder='description'>
+            <input v-model='username' type="text" name='username' placeholder='username'>
+            <input @change='handleChange' type="file" name='file' accept='image/*'>
+            <button @click='handleClick'>submit</button>
+        </form>
     </div>
- </div>
+    <div class="content">
+        <div  class="image-content" v-for='item in images'>
+          
+                <img :src=item.url alt="img">
+                <p class="title">{{item.title}}</p>
+        </div>
+    </div>
+</div>
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>

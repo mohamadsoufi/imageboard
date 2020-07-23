@@ -14,7 +14,7 @@ body {
     margin: 10px 50px;
 }
 
-#main {
+.content {
     display: grid;
     grid-template-columns: 350px 350px 350px;
     row-gap: 10px;
