@@ -68,6 +68,7 @@ app.post('/upload', uploader.single('file'), s3.upload, function (req, res) {
 app.get('/image-card/:id', (req, res) => {
     let id = req.params
     let idNum = Number(id.id)
+    console.log('id params:', id);
     db.getImage([idNum]).then(({ rows }) => {
         // console.log('results in get image :', results);
 

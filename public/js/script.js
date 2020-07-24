@@ -12,7 +12,7 @@
             file: null,
             created_at: '',
             id: '',
-            currentId: '',
+            current_id: '',
             current_image: [],
         }, // data ends
 
@@ -41,30 +41,38 @@
                     console.log('err in POST /upload: ', err);
                 });
             },
+
             handleChange: function (e) {
                 this.file = e.target.files[0]
             },
-            clickImage: function (id) {
-                var self = this
 
-                console.log('content clicked')
-                // console.log('id :', id);
-                this.currentId = id
+            getCurId: function (id) {
 
-                axios.get('/image-card/' + self.currentId).then(function (response) {
-                    // console.log('this :', self.currentId);
-                    // console.log('response in get >>> :', response.data.image);
-                    var { url, username, title, description, created_at, id } = response.data.image
-                    self.current_image.unshift(response.data.image)
-                    // console.log('cardUrl :', current_image);
-                })
+                this.current_id = id
 
             },
             closeModal: function () {
-                console.log('click handled')
-                //   this.file = e.target.files[0] something like that 
+                // console.log('this in close:', this.current_id);
+                console.log('close component ');
+                this.current_id = null
+                var self = this
+                // var body = document.body;
+                // var content = document.getElementsByClassName("content");
+                // console.log('content in close :', content[0]);
+                // content[0].style.visibility = 'visible';
+
+                // body.style.height = '100vh';
+                // body.style.overflowY = 'visible';
 
             },
+
+
+
+
+
+            // closeCard: function () {
+            //     this.current_id = null
+            // }
         }
     });
 

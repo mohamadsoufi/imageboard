@@ -9,7 +9,7 @@
     
     
     <div id="main">
-        <image-card v-if="current_image" :id="current_image" :current_image="current_image" @close='closeModal' ></image-card>
+        <image-card v-if="current_id" :current_id="current_id" :current_image="current_image" @close='closeModal' ></image-card>
         <h1 class="title">My Imageboard</h1>
         <h2 class="latest-images">latest images</h2>
     <div>
@@ -23,27 +23,41 @@
         </form>
     </div>
     <div class="content" >
-        <div @click="clickImage(item.id)"  class="image-content" v-for='item in images'>
+        <div  @click='getCurId(item.id)' class="images-content" v-for='item in images'>
           
                 <img :src=item.url alt="img" >
-                <p class="title">{{item.title}}</p>
+                <div class="images-title">
+
+                    <p >{{item.title}}</p>
+                </div>
         </div>
     </div>
 </div>
 
-<script id="image-card-template" type="text/x-template">
-       <div @click='closeModal' class="card-container">
-           <div v-for="info in current_image" v-if="current_image" class="image-container">
-               <img :src=info.url alt="img" class="image-card">
-               <h2>{{info.title}}</h2>
-               <p>{{info.description}}</p>
-               <p>Uploaded by {{info.username}} on {{info.created_at}}</p>
-           </div>
-           <div class="comment-container">
-               <input type="text" name="Comment" >
-               <input type="text" name="Username" >
-               <button class="Submit-comment-btn" type="submit">Submit</button>
-           </div>
+<script  id="image-card-template" type="text/x-template" >
+       <div  class="card-container" @click='closeCard'>
+           <div v-for="info in current_image" class="card-overlay">
+               <div class="image-container">
+
+                   <img :src=info.url alt="img" class="image-card">
+                   <h2>{{info.title}}</h2>
+                   <p>{{info.description}}</p>
+                   <p>Uploaded by {{info.username}} on {{info.created_at}}</p>
+                </div>
+                   <div class="add-comment-container">
+                       <p>add a comment!</p>
+                       <input type="text" name="Comment" >
+                       <input type="text" name="Username" >
+                       <button class="Submit-comment-btn" type="submit">Submit</button>
+                    </div>
+
+            </div>
+            <!-- <div  v-for="comment in comments" class='comments'>
+              <p></p>
+            </div>         -->
+
+
+
        </div>
 </script>
 

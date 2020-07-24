@@ -21,3 +21,11 @@ module.exports.getImage = function (params) {
     `;
     return db.query(q, params);
 };
+
+module.exports.getcomments = function (params) {
+    let q = `SELECT * FROM images 
+             WHERE $1 = id
+    `;
+    return db.query(q, params);
+};
+
