@@ -53,12 +53,13 @@ img {
     z-index: 999;
 }
 .card-overlay {
+    z-index: 0;
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.637);
+    background-color: rgba(0, 0, 0, 0.781);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -66,21 +67,26 @@ img {
 }
 
 .image-container {
+    z-index: 999;
+
     color: white;
     width: 70%;
 }
 
 .image-card {
     height: auto;
-    width: auto;
 }
 
 .add-comment-container {
     border: black 1px solid;
+    background-color: rgba(128, 128, 128, 0.589);
     color: white;
+    border-radius: 50%;
 }
 
 .comments {
+    color: white;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {

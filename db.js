@@ -15,17 +15,29 @@ module.exports.addImage = function (params) {
     return db.query(q, params);
 }
 
-module.exports.getImage = function (params) {
+// module.exports.getImage = function (params) {
+//     let q = `SELECT * FROM images 
+//              WHERE $1 = id`;
+//     return db.query(q, params);
+// };
+
+module.exports.addComment = function (params) {
+    let q = `INSERT INTO comments (comment_username,comment,image_id) 
+    VALUES ($1, $2, $3 ) `;
+
+    return db.query(q, params);
+}
+
+module.exports.getImgAndComments = function (params) {
     let q = `SELECT * FROM images 
-             WHERE $1 = id
-    `;
+             LEFT JOIN comments 
+             ON images.id = comments.image_id
+             WHERE images.id = $1 
+              `;
     return db.query(q, params);
 };
 
-module.exports.getcomments = function (params) {
-    let q = `SELECT * FROM images 
-             WHERE $1 = id
-    `;
-    return db.query(q, params);
-};
-
+// `SELECT * FROM images 
+//              LEFT JOIN comments 
+//              ON images.id = comments.image_id 
+//              ORDER BY images.id DESC`

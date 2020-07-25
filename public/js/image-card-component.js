@@ -2,11 +2,13 @@
 
     Vue.component('image-card', {
         template: '#image-card-template',
-        props: ['current_image', 'current_id',],
+        props: ['current_image', 'current_id', 'comments'],
         data: function () {
             return {
-                // current_image ={}
-                // current_image: image
+
+                comment: '',
+                username: ''
+
             }
         },
 
@@ -16,21 +18,58 @@
             var self = this
 
             axios.get('/image-card/' + id).then(function (response) {
-                // console.log('this :', self.current_id);
-                // console.log('response in get >>> :', response.data.image);
-                var { url, username, title, description, created_at, id } = response.data.image
-                self.current_image.unshift(response.data.image)
-                // console.log('cardUrl :', current_image);
+                console.log('response in get >>>>>>>> :', response.data.rows);
+
+                response.data.rows.forEach(function (e) {
+
+                    var commentsObj = {
+                        'comment': e.comment,
+                        'comment_username': e.comment_username
+                    }
+                    self.comments.unshift(commentsObj)
+
+                });
+
+                // var { comment, comment_username } = response.data.rows
+                // self.comments.unshift(response.data.rows)
+                // console.log('comment :', comment);
+
+
+
+                var { url, username, title, description, created_at, id } = response.data.rows[0]
+                self.current_image.unshift(response.data.rows[0])
             })
 
         },
 
         methods: {
+            //closeCard in temp
+            // close in compo @close
             closeCard: function () {
                 this.$emit('close')
-            }
+            },
+            getComment: function (e) {
+                var self = this
+                e.preventDefault();
+                document.getElementById('comment').value = ''
+                document.getElementById('username').value = ''
 
+                let comment = {
+                    'comment': this.comment,
+                    'username': this.username,
+                    "id": this.current_id
+                }
 
+                axios.post('/comment', comment).then(function (resp) {
+                    // console.log('resp in comment :', resp);
+                    // self.images.unshift(resp.data.image)
+
+                }).catch(function (err) {
+                    console.log('err in axios POST /comment: ', err);
+                });
+
+                this.$emit('get')
+            },
 
             // noScroll: function () {
             //     console.log('no scroll :');

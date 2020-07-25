@@ -14,6 +14,9 @@
             id: '',
             current_id: '',
             current_image: [],
+            comment: '',
+            username: '',
+            comments: [],
         }, // data ends
 
         mounted: function () {
@@ -47,7 +50,6 @@
             },
 
             getCurId: function (id) {
-
                 this.current_id = id
 
             },
@@ -55,21 +57,24 @@
                 // console.log('this in close:', this.current_id);
                 console.log('close component ');
                 this.current_id = null
-                var self = this
+                this.current_image = []
+                // var self = this
                 // var body = document.body;
                 // var content = document.getElementsByClassName("content");
-                // console.log('content in close :', content[0]);
-                // content[0].style.visibility = 'visible';
 
                 // body.style.height = '100vh';
                 // body.style.overflowY = 'visible';
 
             },
+            getComments: function () {
+                // e.preventDefault()
+                console.log('get comments');
+                let self = this
+                console.log('this.comment :', this.comment);
 
 
 
-
-
+            }
             // closeCard: function () {
             //     this.current_id = null
             // }
