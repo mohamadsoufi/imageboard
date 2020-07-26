@@ -91,15 +91,26 @@
                 // console.log('lastImageId in get more:', this.lastImageId[0]);
                 var self = this
                 console.log('lastImageId cur id:', this.lastImageId);
-                console.log('self.images :', self.images);
+                // console.log('self.images :', self.images);
 
 
 
                 axios.get('/more-images/' + self.lastImgId).then(function (resp) {
                     // reset the id!!!
                     resp.data.forEach(function (ele) {
-
+                        // console.log('ele :', ele);
                         self.images.push(ele)
+                        if (ele.id == 1) {
+                            console.log('ele :', ele);
+
+                            // document.getElementsByClassName('more-btn')[0].style.visibility = 'hidden'
+                            var btn = document.getElementsByClassName('more-btn')[0]
+                            btn.classList.add('no-more-btn')
+                            btn.innerHTML = 'No More Images'
+
+
+                        }
+
                     });
                     let lastImageId = self.images[self.images.length - 1].id
 

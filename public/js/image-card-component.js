@@ -16,9 +16,12 @@
 
             var id = this.current_id
             var self = this
+            var test
+
 
             axios.get('/image-card/' + id).then(function (response) {
                 console.log('response in get >>>>>>>> :', response.data.rows);
+                test = response.data.rows[0]
 
                 self.comments.unshift(response.data.rows[0])
 
