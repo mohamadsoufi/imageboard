@@ -39,6 +39,9 @@ img {
     border-radius: 2px;
     object-fit: contain;
 }
+.img-link {
+    text-decoration: none;
+}
 
 .images-title {
     /* position: relative; */

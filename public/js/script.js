@@ -12,7 +12,9 @@
             file: null,
             created_at: '',
             id: '',
-            current_id: '',
+            // current_id: '',
+            current_id: location.hash.slice(1),
+
             current_image: [],
             comment: '',
             username: '',
@@ -30,9 +32,16 @@
                 let lastImageId = self.images[self.images.length - 1].id
                 lastId.push(lastImageId)
                 self.lastImgId = lastImageId
-                console.log('self.lastImgId :', self.lastImgId);
-                console.log('lastImageId up:', lastId);
+                // console.log('self.lastImgId :', self.lastImgId);
+                // console.log('lastImageId up:', lastId);
+            }).catch(function (err) {
+                console.log('err in GET/ images: ', err);
+            });
+
+            window.addEventListener('hashchange', function () {
+                self.current_id = location.hash.slice(1)
             })
+
         },
 
         methods: {
@@ -57,16 +66,17 @@
                 this.file = e.target.files[0]
             },
 
-            getCurId: function (id) {
-                this.current_id = id
+            // getCurId: function (id) {
+            //     this.current_id = id
 
-            },
+            // },
             closeModal: function () {
                 // console.log('this in close:', this.current_id);
-                console.log('close component ');
+                // console.log('close component ');
                 this.current_id = null
                 this.current_image = []
                 this.comments = []
+                location.hash = ''
                 // var self = this
                 // var body = document.body;
                 // var content = document.getElementsByClassName("content");
@@ -79,7 +89,7 @@
                 // e.preventDefault()
                 console.log('get comments');
                 let self = this
-                console.log('this.comment :', this.comment);
+                // console.log('this.comment :', this.comment);
 
             },
             // getLastId: function () {
@@ -89,26 +99,21 @@
             // },
             getMoreImages: function () {
                 // console.log('lastImageId in get more:', this.lastImageId[0]);
-                var self = this
-                console.log('lastImageId cur id:', this.lastImageId);
+                // console.log('lastImageId cur id:', this.lastImageId);
                 // console.log('self.images :', self.images);
 
 
 
+                var self = this
                 axios.get('/more-images/' + self.lastImgId).then(function (resp) {
                     // reset the id!!!
                     resp.data.forEach(function (ele) {
                         // console.log('ele :', ele);
                         self.images.push(ele)
                         if (ele.id == 1) {
-                            console.log('ele :', ele);
-
-                            // document.getElementsByClassName('more-btn')[0].style.visibility = 'hidden'
                             var btn = document.getElementsByClassName('more-btn')[0]
                             btn.classList.add('no-more-btn')
                             btn.innerHTML = 'No More Images'
-
-
                         }
 
                     });

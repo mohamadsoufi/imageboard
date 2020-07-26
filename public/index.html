@@ -19,7 +19,6 @@
         :current_id="current_id"
         :current_image="current_image"
         :comments="comments"
-
          @close='closeModal' 
          @get="getComments"
          ></image-card>
@@ -33,15 +32,18 @@
             <button @click='handleClick'>submit</button>
         </form>
     </div>
-
+<!-- @click='getCurId(item.id)' -->
     <div class="content" >
-        <div  @click='getCurId(item.id)' class="images-content" v-for='item in images'>
-            
-            <img :src=item.url alt="img" >
+        <div   class="images-content" v-for='item in images'>
+            <a :href=" '#' + item.id" class="img-link">
 
-            <div class="images-title">
-                <p >{{item.title}}</p>
-            </div>
+                
+                <img :src=item.url alt="img" :id='item.id' >
+                
+                <div class="images-title">
+                    <p >{{item.title}}</p>
+                </div>
+            </a>
 
         </div>
         <div></div>

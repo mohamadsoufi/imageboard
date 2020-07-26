@@ -12,22 +12,54 @@
             }
         },
 
-        mounted: function () {
+        mounted:
+            function () {
 
-            var id = this.current_id
-            var self = this
-            var test
+                var id = this.current_id
+                var self = this
 
 
-            axios.get('/image-card/' + id).then(function (response) {
-                console.log('response in get >>>>>>>> :', response.data.rows);
-                test = response.data.rows[0]
+                self.comments = []
+                self.current_image = []
 
-                self.comments.unshift(response.data.rows[0])
+                axios.get('/image-card/' + id).then(function (response) {
 
-                var { url, username, title, description, created_at, id } = response.data.rows[0]
-                self.current_image.unshift(response.data.rows[0])
-            })
+                    self.comments.unshift(response.data.rows[0])
+
+                    var { url, username, title, description, created_at, id } = response.data.rows[0]
+                    self.current_image.unshift(response.data.rows[0])
+                }).catch(function (err) {
+
+                    console.log('err in GET/ image: ', err);
+                });
+
+
+
+            },
+        watch: {
+            current_id: function () {
+
+
+
+                var id = location.hash.slice(1)
+                console.log('hash id :', id);
+                var self = this
+                self.comments = []
+                self.current_image = []
+
+
+                axios.get('/image-card/' + id).then(function (response) {
+                    // console.log('response in get >>>>>>>> :', response.data.rows);
+
+
+                    self.comments.unshift(response.data.rows[0])
+
+                    var { url, username, title, description, created_at, id } = response.data.rows[0]
+                    self.current_image.unshift(response.data.rows[0])
+                }).catch(function (err) {
+                    console.log('err in GET/ image: ', err);
+                });
+            }
 
         },
 
