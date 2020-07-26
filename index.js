@@ -10,6 +10,7 @@ app.use(express.json());
 const multer = require('multer');
 const uidSafe = require('uid-safe');
 const path = require('path');
+const { get } = require('http');
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, __dirname + '/uploads');
@@ -33,10 +34,21 @@ const uploader = multer({
 
 app.get('/images', (req, res) => {
     db.getImages().then((results) => {
+        // console.log('results :', results);
+        // result = results.rows.sort((a, b) => b.id - a.id)
 
-        result = results.rows.sort((a, b) => b.id - a.id)
+        res.json(results);
+    })
+})
 
-        res.json(result);
+app.get('/more-images/:id', (req, res) => {
+
+    // console.log('req.body :', req.params.id);
+    let id = req.params.id
+
+    db.getMoreImages(id).then((resp) => {
+        // console.log('resp :', resp);
+        res.json(resp.rows)
     })
 })
 
@@ -47,15 +59,6 @@ app.post('/upload', uploader.single('file'), s3.upload, function (req, res) {
     const { filename } = req.file
     const url = s3Url + filename
 
-    // if (req.file) {
-    //     res.json({
-    //         success: true
-    //     });
-    // } else {
-    //     res.json({
-    //         success: false
-    //     });
-    // }
     db.addImage([title, description, username, url]).then(({ rows }) => {
 
         res.json({ image: rows[0] })
@@ -69,7 +72,6 @@ app.post('/comment/', function (req, res) {
     const { comment, username, id } = req.body
     db.addComment([username, comment, id]).then((res) => {
         //come here later <<<<<<<<<<<<<<<<<<<<<<<<<<<
-        // console.log('res :', res);
     }).catch(function (err) {
         console.log('err in app POST /comment: ', err);
     });
@@ -79,19 +81,10 @@ app.post('/comment/', function (req, res) {
 
 app.get('/image-card/:id', (req, res) => {
     let id = req.params
-    // console.log('id :', id);
     let idNum = Number(id.id)
-    // console.log('id params:', i  d);
-    // db.getImage([idNum]).then(({ rows }) => {
-    //     // console.log('results in get image :', results);
 
-    //     res.json({ image: rows[0] });
-    // }).catch((err) => {
-    //     console.log('err in add image card:', err);
-    // });
     db.getImgAndComments([idNum]).then((response) => {
 
-        console.log('response :', response);
         res.json(response);
     }).catch((err) => {
         console.log('err in add image card:', err);

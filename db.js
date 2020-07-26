@@ -2,9 +2,19 @@ const spicedPg = require("spiced-pg");
 const db = spicedPg(process.env.DATABASE_URL || "postgres:postgres:postgres@localhost:5432/caper-imageboard");
 
 module.exports.getImages = function () {
-    let q = "SELECT * FROM images ";
+    let q = `SELECT * FROM images
+             ORDER BY images.id DESC
+             LIMIT 9 `;
     return db.query(q);
 };
+
+exports.getMoreImages = lastId => db.query(
+    `SELECT * FROM images
+        WHERE id < $1
+        ORDER BY id DESC
+        LIMIT 6`,
+    [lastId]
+)
 
 
 module.exports.addImage = function (params) {

@@ -17,16 +17,24 @@
             comment: '',
             username: '',
             comments: [],
+            lastImageId: [],
+            lastImgId: ''
         }, // data ends
 
         mounted: function () {
 
             var self = this;
+            var lastId = this.lastImageId
             axios.get('/images').then(function (response) {
-                self.images = response.data;
+                self.images = response.data.rows;
+                let lastImageId = self.images[self.images.length - 1].id
+                lastId.push(lastImageId)
+                self.lastImgId = lastImageId
+                console.log('self.lastImgId :', self.lastImgId);
+                console.log('lastImageId up:', lastId);
             })
-
         },
+
         methods: {
             handleClick: function (e) {
                 e.preventDefault();
@@ -58,6 +66,7 @@
                 console.log('close component ');
                 this.current_id = null
                 this.current_image = []
+                this.comments = []
                 // var self = this
                 // var body = document.body;
                 // var content = document.getElementsByClassName("content");
@@ -72,9 +81,34 @@
                 let self = this
                 console.log('this.comment :', this.comment);
 
+            },
+            // getLastId: function () {
+            //     let lastImageId = this.images[this.images.length - 1].id
+            //     console.log('lastImageId :', lastImageId);
+            //     // lastId.push(lastImageId)
+            // },
+            getMoreImages: function () {
+                // console.log('lastImageId in get more:', this.lastImageId[0]);
+                var self = this
+                console.log('lastImageId cur id:', this.lastImageId);
+                console.log('self.images :', self.images);
 
 
-            }
+
+                axios.get('/more-images/' + self.lastImgId).then(function (resp) {
+                    // reset the id!!!
+                    resp.data.forEach(function (ele) {
+
+                        self.images.push(ele)
+                    });
+                    let lastImageId = self.images[self.images.length - 1].id
+
+                    self.lastImgId = lastImageId
+                }).catch(function (err) {
+                    console.log('err in axios GET/ more images :', err);
+                })
+
+            },
             // closeCard: function () {
             //     this.current_id = null
             // }

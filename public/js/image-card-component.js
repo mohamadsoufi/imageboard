@@ -20,21 +20,7 @@
             axios.get('/image-card/' + id).then(function (response) {
                 console.log('response in get >>>>>>>> :', response.data.rows);
 
-                response.data.rows.forEach(function (e) {
-
-                    var commentsObj = {
-                        'comment': e.comment,
-                        'comment_username': e.comment_username
-                    }
-                    self.comments.unshift(commentsObj)
-
-                });
-
-                // var { comment, comment_username } = response.data.rows
-                // self.comments.unshift(response.data.rows)
-                // console.log('comment :', comment);
-
-
+                self.comments.unshift(response.data.rows[0])
 
                 var { url, username, title, description, created_at, id } = response.data.rows[0]
                 self.current_image.unshift(response.data.rows[0])
@@ -82,10 +68,6 @@
 
             // },
         }
-
-
     })
-
-
 
 })()
