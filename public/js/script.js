@@ -32,6 +32,8 @@
                 let lastImageId = self.images[self.images.length - 1].id
                 lastId.push(lastImageId)
                 self.lastImgId = lastImageId
+
+
                 // console.log('self.lastImgId :', self.lastImgId);
                 // console.log('lastImageId up:', lastId);
             }).catch(function (err) {
@@ -64,6 +66,9 @@
                 }).catch(function (err) {
                     console.log('err in POST /upload: ', err);
                 });
+                self.title = ''
+                self.description = ''
+                self.username = ''
             },
 
             handleChange: function (e) {
@@ -97,12 +102,11 @@
                 var self = this
                 window.onscroll = function () {
                     let bottomOfWindow = Math.floor(document.documentElement.scrollTop) + Math.floor(window.innerHeight) + 1 > Math.floor(document.documentElement.offsetHeight) - 100
-                    console.log(document.documentElement.scrollTop + window.innerHeight, document.documentElement.offsetHeight);
 
                     if (bottomOfWindow) {
-                        console.log('bottom of window');
+                        // console.log('bottom of window');
                         axios.get('/more-images/' + self.lastImgId).then(function (resp) {
-                            console.log('resp :', resp);
+                            // console.log('resp :', resp);
                             resp.data.forEach(function (ele) {
                                 self.images.push(ele)
                                 // if (ele.id == 1) {
@@ -115,7 +119,7 @@
                             let lastImageId = self.images[self.images.length - 1].id
 
                             self.lastImgId = lastImageId
-                            console.log('scrolling ');
+                            // console.log('scrolling ');
                         }).catch(function (err) {
                             console.log('err in axios GET/ more images :', err);
                         })

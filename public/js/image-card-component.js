@@ -2,13 +2,14 @@
 
     Vue.component('image-card', {
         template: '#image-card-template',
-        props: ['current_image', 'current_id'],
+        props: ['current_id'],
         data: function () {
             return {
 
                 comment: '',
                 username: '',
                 comments: [],
+                curImg: ''
 
 
             }
@@ -31,7 +32,8 @@
 
 
                     var { url, username, title, description, created_at, id } = response.data.rows[0]
-                    self.current_image.unshift(response.data.rows[0])
+                    self.curImg = response.data.rows[0]
+                    console.log('self.curImg :', self.curImg);
                 }).catch(function (err) {
 
                     console.log('err in GET/ image: ', err);
@@ -44,18 +46,22 @@
 
                 var id = location.hash.slice(1)
                 var self = this
-                this.comments = []
-                this.current_image = []
+                // this.comments = []
+                // this.current_image = []
                 // this.$emit('resetImgArr')
 
                 axios.get('/image-card/' + id).then(function (response) {
+                    // console.log('self.comments :', self.comments);
+                    // console.log('response.data.rows i image card:', response.data.rows[0]);
+                    response.data.rows.forEach(function (e) {
 
+                        self.comments.unshift(e)
+                    })
 
-                    self.comments.unshift(response.data.rows[0])
 
                     var { url, username, title, description, created_at, id } = response.data.rows[0]
 
-                    self.current_image.unshift(response.data.rows[0])
+                    self.curImg = response.data.rows[0]
                 }).catch(function (err) {
                     console.log('err in GET/ image: ', err);
                 });
@@ -78,14 +84,12 @@
 
                 // }
             },
-            getComment: function (e) {
+            addComment: function (e) {
                 var self = this
-                e.preventDefault();
-                document.getElementById('comment').value = ''
-                document.getElementById('username').value = ''
+                // e.preventDefault();
 
-                this.comments = []
-                this.current_image = []
+                // this.comments = []
+                // this.current_image = []
                 let comment = {
                     'comment': this.comment,
                     'username': this.username,
@@ -93,8 +97,13 @@
                 }
 
                 axios.post('/comment', comment).then(function (resp) {
-                    // console.log('resp in comment :', resp);
-                    // self.images.unshift(resp.data.image)
+                    self.comments.unshift(resp.data)
+                    // document.getElementById('comment').value = ''
+                    // document.getElementById('username').value = ''
+                    self.comment = ''
+                    self.username = ''
+
+
 
                 }).catch(function (err) {
                     console.log('err in axios POST /comment: ', err);

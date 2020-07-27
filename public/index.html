@@ -23,7 +23,6 @@
         <image-card 
         v-if="current_id" 
         :current_id="current_id"
-        :current_image="current_image"
          @close='closeModal' 
          @get="getComments"
          :closable='true'
@@ -63,10 +62,10 @@
             </a>
 
         </div>
-        <!-- <div class="btn-parent">
-            <p  class="more-msg">sdfsdfsdfs</p>
+        <div class="btn-parent">
+            <p  class="more-msg">no more images</p>
             
-        </div> -->
+        </div>
     </div>
 
 </div>
@@ -79,13 +78,13 @@
 
    
     <div  class="card-container"   >
-        <div v-for="info in current_image"  class="card-overlay">
+        <div @click='closeCard'  class="card-overlay">
                
-                <div  class="image-container">
-                    <img @click='closeCard' :src=info.url alt="img"  class="image-card">
-                    <h2>{{info.title}}</h2>
-                    <p>{{info.description}}</p>
-                    <p>Uploaded by {{info.username}} on {{info.created_at}}</p>
+                <div v-on:click.stop  class="image-container">
+                    <img  :src=curImg.url alt="img"  class="image-card">
+                    <h2>{{curImg.title}}</h2>
+                    <p>{{curImg.description}}</p>
+                    <p>Uploaded by {{curImg.username}} on {{curImg.created_at}}</p>
                 
                     
                     <div class="add-comment-container">
@@ -94,7 +93,7 @@
                             <input v-model='comment' type="text" id="comment" 
                             placeholder="comment" >>
                             <input v-model='username' type="text" id="username"  placeholder="Username" >
-                            <button @click='getComment' class="Submit-comment-btn" >Submit</button>
+                            <button @click='addComment' class="Submit-comment-btn" >Submit</button>
                         </form>
                     </div>
                     <div class="comments-container">

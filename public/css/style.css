@@ -161,6 +161,7 @@ img {
 
 .image-container {
     z-index: 9;
+    background-color: rgba(0, 0, 0, 0.89);
 
     color: white;
     width: 50%;
@@ -169,7 +170,8 @@ img {
 .image-card {
     z-index: 9;
     height: auto;
-    max-height: 400px;
+    max-height: 416px;
+    max-width: 333px;
 }
 
 .add-comment-container {

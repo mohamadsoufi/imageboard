@@ -44,7 +44,7 @@ module.exports.addImage = function (params) {
 
 module.exports.addComment = function (params) {
     let q = `INSERT INTO comments (comment_username,comment,image_id) 
-    VALUES ($1, $2, $3 ) `;
+    VALUES ($1, $2, $3 ) RETURNING * `;
 
     return db.query(q, params);
 }
