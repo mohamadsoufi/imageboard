@@ -96,19 +96,20 @@
 
                 var self = this
                 window.onscroll = function () {
-                    let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+                    let bottomOfWindow = Math.floor(document.documentElement.scrollTop) + Math.floor(window.innerHeight) + 1 > Math.floor(document.documentElement.offsetHeight) - 100
+                    console.log(document.documentElement.scrollTop + window.innerHeight, document.documentElement.offsetHeight);
 
                     if (bottomOfWindow) {
-                        console.log('scrolling  up');
+                        console.log('bottom of window');
                         axios.get('/more-images/' + self.lastImgId).then(function (resp) {
                             console.log('resp :', resp);
                             resp.data.forEach(function (ele) {
                                 self.images.push(ele)
-                                if (ele.id == 1) {
-                                    var moreMsg = document.getElementsByClassName('more-msg')[0]
+                                // if (ele.id == 1) {
+                                //     var moreMsg = document.getElementsByClassName('more-msg')[0]
 
-                                    moreMsg.innerHTML = 'No More Images'
-                                }
+                                //     moreMsg.innerHTML = 'No More Images'
+                                // }
 
                             });
                             let lastImageId = self.images[self.images.length - 1].id
