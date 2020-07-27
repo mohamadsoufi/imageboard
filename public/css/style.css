@@ -82,6 +82,9 @@ submit-btn {
 .jumbotron {
     display: flex;
     justify-content: space-between;
+    padding: 40px;
+    color: #ffc872;
+    font-size: 15px;
 }
 
 .title,
@@ -90,15 +93,17 @@ submit-btn {
 }
 
 .add-img {
+    fill: #ffc872;
     cursor: pointer;
+    margin: 10px;
     height: 30px;
     width: 30px;
-    margin: 10px 50px;
+    margin: 12px 50px;
 }
 
 .content {
     display: grid;
-    grid-template-columns: 350px 350px 350px;
+    grid-template-columns: 380px 380px 380px;
     row-gap: 15px;
     justify-content: space-around;
     z-index: 1;
@@ -114,12 +119,13 @@ submit-btn {
     margin: 10px;
     background-color: black;
     text-align: center;
+    width: 289px;
+    /* padding: 12px; */
 }
 
 img {
     width: 100%;
-    height: 200px;
-    border-radius: 2px;
+    height: 430px;
     object-fit: contain;
 }
 .img-link {
@@ -127,11 +133,15 @@ img {
 }
 
 .images-title {
-    /* position: relative; */
-    bottom: 0;
+    position: relative;
+    bottom: 1px;
     color: #ffc872;
     background-color: #ff72;
-    height: 18px;
+    height: 22px;
+    text-align: center;
+    border-radius: 12px;
+    width: 80%;
+    margin: 0 36px;
 }
 
 /* ///////  image card /////// */
@@ -185,7 +195,24 @@ img {
 
 .comments-container {
     overflow-y: scroll;
-    max-height: 130px;
+    max-height: 100px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.3);
+    background-color: #333;
 }
 
 .comments {
@@ -195,7 +222,7 @@ img {
     display: grid;
     grid-template-columns: 1fr;
     text-align: start;
-    margin: 2px 10px;
+    margin: 0 10px;
     padding-left: 5px;
     background-color: rgba(205, 92, 92, 0.452);
 }
