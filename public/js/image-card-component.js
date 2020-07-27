@@ -9,8 +9,8 @@
                 comment: '',
                 username: '',
                 comments: [],
-                curImg: ''
-
+                curImg: '',
+                isHidden: false
 
             }
         },

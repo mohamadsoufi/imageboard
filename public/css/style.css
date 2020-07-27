@@ -26,18 +26,30 @@ button {
     background-color: #ffc872;
 }
 
+.add-img-form-container{
+    height: 150px;
+    display: inline;
+}
+
 .file-form {
     text-align: center;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr ;
+    height: 100px;
+    width: 30%;
+    margin: auto;
+
 }
 
 .select-submit {
     text-align: center;
+    margin: 20px;
 }
 
 .input-file {
     width: 222px;
+    font-size: 17px;
+    outline: auto;
 }
 
 label {
@@ -69,7 +81,7 @@ submit-btn {
     font-size: 1em;
     font-weight: 700;
     color: white;
-    background-color: black;
+    background-color: red;
     display: inline-block;
     cursor: pointer;
 }
@@ -171,7 +183,7 @@ img {
 
 .image-container {
     z-index: 9;
-    background-color: rgba(0, 0, 0, 0.89);
+    background-color: rgba(0, 0, 0);
 
     color: white;
     width: 50%;
@@ -179,8 +191,7 @@ img {
 
 .image-card {
     z-index: 9;
-    height: auto;
-    max-height: 416px;
+    height: 403px;
     max-width: 333px;
 }
 
@@ -191,11 +202,19 @@ img {
     background-color: rgba(71, 70, 70, 0.932);
     color: white;
     border-radius: 2%;
+    display: block;
+}
+.add-comment-icon {
+    fill: #ffc872;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    margin: 4px;
 }
 
 .comments-container {
     overflow-y: scroll;
-    max-height: 100px;
+    max-height: 80px;
 }
 
 ::-webkit-scrollbar-track {
@@ -225,6 +244,8 @@ img {
     margin: 0 10px;
     padding-left: 5px;
     background-color: rgba(205, 92, 92, 0.452);
+    font: bold;
+    font-size: 14px;
 }
 
 .btn-parent {
