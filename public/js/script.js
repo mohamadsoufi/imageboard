@@ -70,10 +70,6 @@
                 this.file = e.target.files[0]
             },
 
-            // getCurId: function (id) {
-            //     this.current_id = id
-
-            // },
             closeModal: function () {
                 // console.log('this in close:', this.current_id);
                 // console.log('close component ');
@@ -81,42 +77,44 @@
                 this.current_image = []
                 // this.comments = []
                 location.hash = ''
-                var body = document.body;
-                body.style.height = '100vh';
-                body.style.overflowY = 'hidden';
+                // var body = document.body;
+                // body.style.height = '100vh';
+                // body.style.overflowY = 'hidden';
 
             },
+
             getComments: function () {
                 // e.preventDefault()
-                console.log('get comments');
+                // console.log('get comments');
                 let self = this
                 // console.log('this.comment :', this.comment);
 
             },
-            // resetImgArr: function () {
-            //     this.comments = []
-            //     this.current_image = []
-            // },
+
 
             scroll: function () {
+
                 var self = this
                 window.onscroll = function () {
                     let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
 
                     if (bottomOfWindow) {
+                        console.log('scrolling  up');
                         axios.get('/more-images/' + self.lastImgId).then(function (resp) {
+                            console.log('resp :', resp);
                             resp.data.forEach(function (ele) {
                                 self.images.push(ele)
                                 if (ele.id == 1) {
-                                    var btn = document.getElementsByClassName('more-btn')[0]
+                                    var moreMsg = document.getElementsByClassName('more-msg')[0]
 
-                                    // btn.innerHTML = 'No More Images'
+                                    moreMsg.innerHTML = 'No More Images'
                                 }
 
                             });
                             let lastImageId = self.images[self.images.length - 1].id
 
                             self.lastImgId = lastImageId
+                            console.log('scrolling ');
                         }).catch(function (err) {
                             console.log('err in axios GET/ more images :', err);
                         })
@@ -124,6 +122,10 @@
                     }
                 };
             },
+            // resetImgArr: function () {
+            //     this.comments = []
+            //     this.current_image = []
+            // },
 
 
             // closeCard: function () {

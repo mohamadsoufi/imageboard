@@ -63,7 +63,6 @@
             </a>
 
         </div>
-        <div></div>
         <div class="btn-parent">
             <p  class="more-msg">sdfsdfsdfs</p>
             
@@ -79,11 +78,11 @@
     
 
    
-    <div  class="card-container"   @click='closeCard'>
+    <div  class="card-container"   >
         <div v-for="info in current_image"  class="card-overlay">
                
-                <div v-on:click='closable = false' class="image-container">
-                    <img :src=info.url alt="img"  class="image-card">
+                <div  class="image-container">
+                    <img @click='closeCard' :src=info.url alt="img"  class="image-card">
                     <h2>{{info.title}}</h2>
                     <p>{{info.description}}</p>
                     <p>Uploaded by {{info.username}} on {{info.created_at}}</p>
@@ -98,10 +97,12 @@
                             <button @click='getComment' class="Submit-comment-btn" >Submit</button>
                         </form>
                     </div>
+                    <div class="comments-container">
 
-                    <div  v-for="comment in comments" class='comments'>
-                    <div>{{comment.comment_username}}:     {{comment.comment}}</div>
-   
+                        <div  v-for="comment in comments" class='comments'>
+                            <div>{{comment.comment_username}}:     {{comment.comment}}</div>
+                        </div>
+                            
                 </div>  
                 </div>  
         </div>      

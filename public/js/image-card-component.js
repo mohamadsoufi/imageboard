@@ -23,8 +23,13 @@
                 this.comments = []
 
                 axios.get('/image-card/' + id).then(function (response) {
+                    // console.log('response.data.rows all comments :', response.data.rows);
+                    response.data.rows.forEach(function (e) {
 
-                    self.comments.unshift(response.data.rows[0])
+                        self.comments.unshift(e)
+                    });
+
+
                     var { url, username, title, description, created_at, id } = response.data.rows[0]
                     self.current_image.unshift(response.data.rows[0])
                 }).catch(function (err) {

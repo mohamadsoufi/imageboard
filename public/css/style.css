@@ -181,6 +181,11 @@ img {
     border-radius: 2%;
 }
 
+.comments-container {
+    overflow-y: scroll;
+    max-height: 130px;
+}
+
 .comments {
     box-sizing: border-box;
     color: white;
@@ -190,8 +195,6 @@ img {
     text-align: start;
     margin: 10px;
     padding-left: 5px;
-    overflow-y: scroll;
-    max-height: 130px;
     background-color: rgba(205, 92, 92, 0.452);
 }
 

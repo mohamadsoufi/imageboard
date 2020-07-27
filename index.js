@@ -68,7 +68,7 @@ app.post('/upload', uploader.single('file'), s3.upload, function (req, res) {
 })
 
 app.post('/comment/', function (req, res) {
-    // console.log('req.body in comments :', req.body);
+    console.log('req.body in comments :', req.body);
     const { comment, username, id } = req.body
     db.addComment([username, comment, id]).then((res) => {
         //come here later <<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -84,7 +84,7 @@ app.get('/image-card/:id', (req, res) => {
     let idNum = Number(id.id)
 
     db.getImgAndComments([idNum]).then((response) => {
-
+        console.log('response in get img and.. :', response);
         res.json(response);
     }).catch((err) => {
         console.log('err in add image card:', err);
