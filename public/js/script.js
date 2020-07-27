@@ -14,13 +14,13 @@
             id: '',
             // current_id: '',
             current_id: location.hash.slice(1),
-
             current_image: [],
             comment: '',
             username: '',
-            comments: [],
             lastImageId: [],
-            lastImgId: ''
+            lastImgId: '',
+            isHidden: false,
+
         }, // data ends
 
         mounted: function () {
@@ -41,6 +41,10 @@
             window.addEventListener('hashchange', function () {
                 self.current_id = location.hash.slice(1)
             })
+
+            this.scroll();
+
+
 
         },
 
@@ -75,14 +79,11 @@
                 // console.log('close component ');
                 this.current_id = null
                 this.current_image = []
-                this.comments = []
+                // this.comments = []
                 location.hash = ''
-                // var self = this
-                // var body = document.body;
-                // var content = document.getElementsByClassName("content");
-
-                // body.style.height = '100vh';
-                // body.style.overflowY = 'visible';
+                var body = document.body;
+                body.style.height = '100vh';
+                body.style.overflowY = 'hidden';
 
             },
             getComments: function () {
@@ -92,39 +93,39 @@
                 // console.log('this.comment :', this.comment);
 
             },
-            // getLastId: function () {
-            //     let lastImageId = this.images[this.images.length - 1].id
-            //     console.log('lastImageId :', lastImageId);
-            //     // lastId.push(lastImageId)
+            // resetImgArr: function () {
+            //     this.comments = []
+            //     this.current_image = []
             // },
-            getMoreImages: function () {
-                // console.log('lastImageId in get more:', this.lastImageId[0]);
-                // console.log('lastImageId cur id:', this.lastImageId);
-                // console.log('self.images :', self.images);
 
-
-
+            scroll: function () {
                 var self = this
-                axios.get('/more-images/' + self.lastImgId).then(function (resp) {
-                    // reset the id!!!
-                    resp.data.forEach(function (ele) {
-                        // console.log('ele :', ele);
-                        self.images.push(ele)
-                        if (ele.id == 1) {
-                            var btn = document.getElementsByClassName('more-btn')[0]
-                            btn.classList.add('no-more-btn')
-                            btn.innerHTML = 'No More Images'
-                        }
+                window.onscroll = function () {
+                    let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
 
-                    });
-                    let lastImageId = self.images[self.images.length - 1].id
+                    if (bottomOfWindow) {
+                        axios.get('/more-images/' + self.lastImgId).then(function (resp) {
+                            resp.data.forEach(function (ele) {
+                                self.images.push(ele)
+                                if (ele.id == 1) {
+                                    var btn = document.getElementsByClassName('more-btn')[0]
 
-                    self.lastImgId = lastImageId
-                }).catch(function (err) {
-                    console.log('err in axios GET/ more images :', err);
-                })
+                                    // btn.innerHTML = 'No More Images'
+                                }
 
+                            });
+                            let lastImageId = self.images[self.images.length - 1].id
+
+                            self.lastImgId = lastImageId
+                        }).catch(function (err) {
+                            console.log('err in axios GET/ more images :', err);
+                        })
+
+                    }
+                };
             },
+
+
             // closeCard: function () {
             //     this.current_id = null
             // }

@@ -2,30 +2,29 @@
 
     Vue.component('image-card', {
         template: '#image-card-template',
-        props: ['current_image', 'current_id', 'comments'],
+        props: ['current_image', 'current_id'],
         data: function () {
             return {
 
                 comment: '',
-                username: ''
+                username: '',
+                comments: [],
+
 
             }
         },
 
         mounted:
             function () {
-
+                // function getImg() {
                 var id = this.current_id
                 var self = this
-
-
-                self.comments = []
-                self.current_image = []
+                // this.$emit('resetImgArr')
+                this.comments = []
 
                 axios.get('/image-card/' + id).then(function (response) {
 
                     self.comments.unshift(response.data.rows[0])
-
                     var { url, username, title, description, created_at, id } = response.data.rows[0]
                     self.current_image.unshift(response.data.rows[0])
                 }).catch(function (err) {
@@ -34,27 +33,23 @@
                 });
 
 
-
             },
         watch: {
             current_id: function () {
 
-
-
                 var id = location.hash.slice(1)
-                console.log('hash id :', id);
                 var self = this
-                self.comments = []
-                self.current_image = []
-
+                this.comments = []
+                this.current_image = []
+                // this.$emit('resetImgArr')
 
                 axios.get('/image-card/' + id).then(function (response) {
-                    // console.log('response in get >>>>>>>> :', response.data.rows);
 
 
                     self.comments.unshift(response.data.rows[0])
 
                     var { url, username, title, description, created_at, id } = response.data.rows[0]
+
                     self.current_image.unshift(response.data.rows[0])
                 }).catch(function (err) {
                     console.log('err in GET/ image: ', err);
@@ -67,7 +62,16 @@
             //closeCard in temp
             // close in compo @close
             closeCard: function () {
+                // e.stopPropagation();
+
+                // document.getElementsByClassName('no-click-area').addEventListener("click", function (el) {
+                //     el.stopPropagation();
+                // });
+                console.log('clickedddddd');
                 this.$emit('close')
+                // if (closable) {
+
+                // }
             },
             getComment: function (e) {
                 var self = this
@@ -75,6 +79,8 @@
                 document.getElementById('comment').value = ''
                 document.getElementById('username').value = ''
 
+                this.comments = []
+                this.current_image = []
                 let comment = {
                     'comment': this.comment,
                     'username': this.username,
@@ -89,7 +95,7 @@
                     console.log('err in axios POST /comment: ', err);
                 });
 
-                this.$emit('get')
+                // this.$emit('get')
             },
 
             // noScroll: function () {
