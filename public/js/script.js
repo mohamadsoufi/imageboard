@@ -70,7 +70,7 @@
             closeModal: function () {
                 this.current_id = null
                 this.current_image = []
-                // location.hash = ''
+                location.hash = ''
                 // var body = document.body;
                 // body.style.height = '100vh';
                 // body.style.overflowY = 'hidden';

@@ -25,7 +25,10 @@
                     });
                     console.log('response.data.rows :', response.data.rows[0]);
                     var { url, username, title, description, id } = response.data.rows[0]
+                    if (response.data.rows.length === 0) {
+                        self.$emit('close')
 
+                    }
                     self.curImg = response.data.rows[0]
 
                     var createdAt = response.data.rows[0].created_at
@@ -33,6 +36,9 @@
 
                     console.log('self.curImg :', self.curImg);
                 }).catch(function (err) {
+                    // closeCard()
+                    this.$emit('close')
+
 
                     console.log('err in GET/ image: ', err);
                 });
