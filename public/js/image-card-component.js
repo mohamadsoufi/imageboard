@@ -23,9 +23,14 @@
                     response.data.rows.forEach(function (e) {
                         self.comments.unshift(e)
                     });
-                    var { url, username, title, description, created_at, id } = response.data.rows[0]
-                    console.log('created_at :', created_at);
+                    console.log('response.data.rows :', response.data.rows[0]);
+                    var { url, username, title, description, id } = response.data.rows[0]
+
                     self.curImg = response.data.rows[0]
+
+                    var createdAt = response.data.rows[0].created_at
+                    self.curImg.created_at = createdAt.slice(0, 10)
+
                     console.log('self.curImg :', self.curImg);
                 }).catch(function (err) {
 
