@@ -12,7 +12,6 @@
             file: null,
             created_at: '',
             id: '',
-            // current_id: '',
             current_id: location.hash.slice(1),
             current_image: [],
             comment: '',
@@ -33,9 +32,6 @@
                 lastId.push(lastImageId)
                 self.lastImgId = lastImageId
 
-
-                // console.log('self.lastImgId :', self.lastImgId);
-                // console.log('lastImageId up:', lastId);
             }).catch(function (err) {
                 console.log('err in GET/ images: ', err);
             });
@@ -43,11 +39,7 @@
             window.addEventListener('hashchange', function () {
                 self.current_id = location.hash.slice(1)
             })
-
             this.scroll();
-
-
-
         },
 
         methods: {
@@ -76,23 +68,12 @@
             },
 
             closeModal: function () {
-                // console.log('this in close:', this.current_id);
-                // console.log('close component ');
                 this.current_id = null
                 this.current_image = []
-                // this.comments = []
-                location.hash = ''
+                // location.hash = ''
                 // var body = document.body;
                 // body.style.height = '100vh';
                 // body.style.overflowY = 'hidden';
-
-            },
-
-            getComments: function () {
-                // e.preventDefault()
-                // console.log('get comments');
-                let self = this
-                // console.log('this.comment :', this.comment);
 
             },
 
@@ -104,20 +85,11 @@
                     let bottomOfWindow = Math.floor(document.documentElement.scrollTop) + Math.floor(window.innerHeight) + 1 > Math.floor(document.documentElement.offsetHeight) - 100
 
                     if (bottomOfWindow) {
-                        // console.log('bottom of window');
                         axios.get('/more-images/' + self.lastImgId).then(function (resp) {
-                            // console.log('resp :', resp);
                             resp.data.forEach(function (ele) {
                                 self.images.push(ele)
-                                // if (ele.id == 1) {
-                                //     var moreMsg = document.getElementsByClassName('more-msg')[0]
-
-                                //     moreMsg.innerHTML = 'No More Images'
-                                // }
-
                             });
                             let lastImageId = self.images[self.images.length - 1].id
-
                             self.lastImgId = lastImageId
                             // console.log('scrolling ');
                         }).catch(function (err) {
@@ -127,15 +99,7 @@
                     }
                 };
             },
-            // resetImgArr: function () {
-            //     this.comments = []
-            //     this.current_image = []
-            // },
 
-
-            // closeCard: function () {
-            //     this.current_id = null
-            // }
         }
     });
 
