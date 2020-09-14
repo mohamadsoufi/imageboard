@@ -21,14 +21,14 @@
 
                 axios.get('/image-card/' + id).then(function (response) {
                     response.data.rows.forEach(function (e) {
+                        if (response.data.rows.length === 0) {
+                            self.$emit('close')
+
+                        }
                         self.comments.unshift(e)
                     });
-                    console.log('response.data.rows :', response.data.rows[0]);
+                    console.log('response.data.rows :', response.data);
                     var { url, username, title, description, id } = response.data.rows[0]
-                    if (response.data.rows.length === 0) {
-                        self.$emit('close')
-
-                    }
                     self.curImg = response.data.rows[0]
 
                     var createdAt = response.data.rows[0].created_at
@@ -36,9 +36,9 @@
 
                     console.log('self.curImg :', self.curImg);
                 }).catch(function (err) {
-                    // closeCard()
-                    this.$emit('close')
-
+                    console.log(' closeeee');
+                    closeCard()
+                    self.$emit('close')
 
                     console.log('err in GET/ image: ', err);
                 });

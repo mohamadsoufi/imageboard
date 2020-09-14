@@ -50,7 +50,7 @@ module.exports.addComment = function (params) {
 }
 
 module.exports.getImgAndComments = function (params) {
-    let q = `SELECT * FROM images 
+    let q = `SELECT * , images.created_at AS created_at FROM images 
              LEFT JOIN comments 
              ON images.id = comments.image_id
              WHERE images.id = $1 
